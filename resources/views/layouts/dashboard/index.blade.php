@@ -167,7 +167,7 @@
                         <img src="{{asset('dashboard/dist/img/muhammed.png')}}" class="img-circle elevation-2" alt="صورة المستخدم">
                     </div>
                     <div class="info">
-                        <a href="profile.html" class="d-block">محمد البدران</a>
+                        <a href="profile.html" class="d-block">محمد سبسبي</a>
                     </div>
                 </div>
 
@@ -225,7 +225,7 @@
         <!-- التذييل -->
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
-                تم التطوير بواسطة محمد البدران
+                تم التطوير بواسطة محمد سبسبي
             </div>
             <strong>حقوق النشر &copy; 2026 <a href="#">لوحة التحكم</a>.</strong> جميع الحقوق محفوظة.
         </footer>
