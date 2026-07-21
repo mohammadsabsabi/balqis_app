@@ -10,8 +10,22 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        return view('dashboard.pages.categories.index', compact('categories'));
+        $request = request();
+        $query = Category::query();
+
+        $name = $request->query('name');
+        $status = $request->query('status');
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+        if ($status) {
+            $query->where('status', $status);
+        }
+        // $categories = Category::all();
+        return view('dashboard.pages.categories.index', [
+            'categories' => $query->get(),
+            
+        ]);
     }
 
     public function create()
@@ -24,7 +38,9 @@ class CategoriesController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string'
+            'description' => 'required|string',
+            'status' => 'required|in:active,inactive'
+
         ]);
 
         Category::create($request->all());
@@ -42,7 +58,8 @@ class CategoriesController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'status' => 'required|in:active,inactive'
         ]);
 
         $category = Category::findOrFail($id);
