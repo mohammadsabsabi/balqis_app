@@ -23,7 +23,7 @@ class CategoriesController extends Controller
         }
         // $categories = Category::all();
         return view('dashboard.pages.categories.index', [
-            'categories' => $query->get(),
+            'categories' => $query->withCount('products')->get(),
             
         ]);
     }
@@ -79,5 +79,12 @@ class CategoriesController extends Controller
         $category->delete();
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'تم الحذف بنجاح');
+    }
+      public function products(Category $category)
+    {
+        return view('dashboard.pages.categories.products', [
+            'category' => $category,
+            'products' => $category->products()->with('store')->paginate(10),
+        ]);
     }
 }

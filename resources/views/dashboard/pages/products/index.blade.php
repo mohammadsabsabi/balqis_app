@@ -10,7 +10,7 @@
             </div>
             <div class="stat-content">
                 <div class="stat-number">128</div>
-                <div class="stat-label">إجمالي الفئات</div>
+                <div class="stat-label">إجمالي المنتجات</div>
             </div>
         </div>
     </div>
@@ -53,17 +53,31 @@
 <!-- الجدول -->
 <!-- الفلترة-->
 <form action="{{ URL::current() }}" method="get" class="row m-2 g-3 align-itmes-end m-2 mt-3">
-    <div class="col-md-4">
-        <input type="text" name="name" class="form-control" value = "{{ request('name') }}" placeholder="Search by name">
-    </div>
     <div class="col-md-3">
+        <input type="text" name="name" class="form-control" value="{{ request('name') }}" placeholder="Search by name">
+    </div>
+    <div class="col-md-2">
         <select name="status" class="form-control">
             <option value="">الكل</option>
             <option value="active" {{ request()->query('status') === 'active' ? 'selected' : '' }}>نشط</option>
             <option value="inactive" {{ request()->query('status') === 'inactive' ? 'selected' : '' }}>غير نشط</option>
         </select>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
+        <x-form.select
+            label="التصنيف"
+            name="category_id"
+            :options="['' => ' الكل'] + $categories->toArray()"
+            :selected="request()->query('category_id' , '')" />
+    </div>
+    <div class="col-md-2">
+        <x-form.select
+            label="المتجر"
+            name="store_id"
+            :options="['' => ' الكل'] + $stores->toArray()"
+            :selected="request()->query('store_id' , '')" />
+    </div>
+    <div class="col-md-2">
         <button type=submit class="btn btn-primary">
             بحث
             <i class="fas fa-search ms-2"></i>
@@ -80,14 +94,14 @@
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-list-alt ml-2"></i>
-            قائمة الفئات
+            قائمة المنتجات
         </h3>
         <div class="card-tools">
-            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus ml-1"></i> إضافة فئة جديدة
+            <a href="{{ route('dashboard.products.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus ml-1"></i> إضافة متجر جديد
             </a>
             {{-- <button type="button" class="btn btn-primary btn-sm">
-                    <i class="fas fa-plus ml-1"></i> إضافة فئة جديدة
+                    <i class="fas fa-plus ml-1"></i> إضافة متجر جديد
                 </button> --}}
         </div>
     </div>
@@ -96,33 +110,34 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>اسم المنتج</th>
                     <th>اسم الفئة</th>
+                    <th>اسم المتجر</th>
                     <th> الوصف</th>
-                    <th> عدد المنتجات</th>
                     <th>الحالة</th>
                     <th>تاريخ التسجيل</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
+                @foreach ($products as $product)
                 <tr>
-                    <td>{{ $category->id }}</td>
-                    <td><strong>{{ $category->name }}</strong></td>
-                    <td>{{ $category->description }}</td>
-                    <td>{{ $category->products_count }}</td>
-                    <td> {{ $category->status }} </td>
-                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $product->id }}</td>
+                    <td><strong>{{ $product->name }}</strong></td>
+                    <td>{{ $product->category->name }}</td>
+                    <td>{{ $product->store->name }}</td>
+                    <td>{{ $product->description }}</td>
+                    <td> {{ $product->status }} </td>
+                    <td>{{ $product->created_at }}</td>
                     <td style="justify-content: space-between;display:flex">
                         {{-- <button class="btn btn-primary btn-action" title="عرض"><i class="fas fa-eye"></i></button> --}}
-                        <a href="{{ route('dashboard.categories.show', $category->id) }}" class="btn btn-primary btn-action" title="عرض"> <i
+                        <a href="{{ route('dashboard.products.show', $product->id) }}" class="btn btn-primary btn-action" title="عرض"> <i
                                 class="fas fa-eye"></i> </a>
 
-                        <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-warning btn-action" title="تعديل"> <i class="fas fa-edit"></i> </a>
-                        <a href="{{ route('dashboard.categories.products', $category->id) }}" class="btn btn-info btn-action" title="عرض المنتجات"> <i class="fas fa-box"></i> </a>
+                        <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-warning btn-action" title="تعديل"> <i class="fas fa-edit"></i> </a>
                         {{-- <button class="btn btn-warning btn-action" title="تعديل" ><i class="fas fa-edit"></i></button> --}}
-                        {{-- <button class="btn btn-danger btn-action" title="حذف"><i class="fas fa-trash"></i></button> --}}
-                        <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
+                        <!-- {{-- <button class="btn btn-danger btn-action" title="حذف"><i class="fas fa-trash"></i></button> --}} -->
+                        <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger btn-action" title="حذف"><i class="fas fa-trash"></i></button>

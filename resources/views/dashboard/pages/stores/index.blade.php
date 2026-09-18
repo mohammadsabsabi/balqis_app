@@ -80,14 +80,14 @@
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-list-alt ml-2"></i>
-            قائمة الفئات
+            قائمة المتاجر
         </h3>
         <div class="card-tools">
-            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus ml-1"></i> إضافة فئة جديدة
+            <a href="{{ route('dashboard.stores.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus ml-1"></i> إضافة متجر جديد
             </a>
             {{-- <button type="button" class="btn btn-primary btn-sm">
-                    <i class="fas fa-plus ml-1"></i> إضافة فئة جديدة
+                    <i class="fas fa-plus ml-1"></i> إضافة متجر جديد
                 </button> --}}
         </div>
     </div>
@@ -96,33 +96,30 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>اسم الفئة</th>
+                    <th>اسم المتجر</th>
                     <th> الوصف</th>
-                    <th> عدد المنتجات</th>
                     <th>الحالة</th>
                     <th>تاريخ التسجيل</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
+                @foreach ($stores as $store)
                 <tr>
-                    <td>{{ $category->id }}</td>
-                    <td><strong>{{ $category->name }}</strong></td>
-                    <td>{{ $category->description }}</td>
-                    <td>{{ $category->products_count }}</td>
-                    <td> {{ $category->status }} </td>
-                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $store->id }}</td>
+                    <td><strong>{{ $store->name }}</strong></td>
+                    <td>{{ $store->description }}</td>
+                    <td> {{ $store->status }} </td>
+                    <td>{{ $store->created_at }}</td>
                     <td style="justify-content: space-between;display:flex">
                         {{-- <button class="btn btn-primary btn-action" title="عرض"><i class="fas fa-eye"></i></button> --}}
-                        <a href="{{ route('dashboard.categories.show', $category->id) }}" class="btn btn-primary btn-action" title="عرض"> <i
+                        <a href="{{ route('dashboard.stores.show', $store->id) }}" class="btn btn-primary btn-action" title="عرض"> <i
                                 class="fas fa-eye"></i> </a>
 
-                        <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-warning btn-action" title="تعديل"> <i class="fas fa-edit"></i> </a>
-                        <a href="{{ route('dashboard.categories.products', $category->id) }}" class="btn btn-info btn-action" title="عرض المنتجات"> <i class="fas fa-box"></i> </a>
+                        <a href="{{ route('dashboard.stores.edit', $store->id) }}" class="btn btn-warning btn-action" title="تعديل"> <i class="fas fa-edit"></i> </a>
                         {{-- <button class="btn btn-warning btn-action" title="تعديل" ><i class="fas fa-edit"></i></button> --}}
-                        {{-- <button class="btn btn-danger btn-action" title="حذف"><i class="fas fa-trash"></i></button> --}}
-                        <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="post">
+                        <!-- {{-- <button class="btn btn-danger btn-action" title="حذف"><i class="fas fa-trash"></i></button> --}} -->
+                        <form action="{{ route('dashboard.stores.destroy', $store->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger btn-action" title="حذف"><i class="fas fa-trash"></i></button>
