@@ -21,6 +21,11 @@ return [
         'icon' => 'nav-icon fas fa-box',
         'route' => 'dashboard.products.index'
     ],
+     [
+        'title' => ' الموارد البشرية',
+        'icon' => 'nav-icon fas fa-users',
+        'route' => 'dashboard.hr.index'
+    ],
     [
         'title' => 'التحقق بخطوتين',
         'icon' => 'nav-icon fas fa-lock',

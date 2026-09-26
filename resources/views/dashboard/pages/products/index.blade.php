@@ -98,10 +98,10 @@
         </h3>
         <div class="card-tools">
             <a href="{{ route('dashboard.products.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus ml-1"></i> إضافة متجر جديد
+                <i class="fas fa-plus ml-1"></i> إضافة منتج جديد
             </a>
             {{-- <button type="button" class="btn btn-primary btn-sm">
-                    <i class="fas fa-plus ml-1"></i> إضافة متجر جديد
+                    <i class="fas fa-plus ml-1"></i> إضافة منتج جديد
                 </button> --}}
         </div>
     </div>

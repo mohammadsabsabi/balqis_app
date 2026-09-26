@@ -6,6 +6,9 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\Dashboard\TwoFactorAuthenticatableController;
+use App\Http\Controllers\Dashboard\HrController;
+use App\Http\Controllers\Dashboard\HrDepartmentsController;
+use App\Http\Controllers\Dashboard\HrEmployeesController;
 Route::group([
     'prefix' => '/admin/dashboard',
     'as' => 'dashboard.',
@@ -31,8 +34,12 @@ Route::group([
     Route::get('/categories/{category}/products', [CategoriesController::class, 'products'])
         ->name('categories.products');
 
-    // Route::resource('categories', CategoriesController::class);
     Route::resource('stores', StoreController::class);
     Route::resource('products', ProductsController::class);
-    Route::get('/2fa' , [TwoFactorAuthenticatableController::class, 'index'])->name('admin.2fa');
+    Route::get('/2fa', [TwoFactorAuthenticatableController::class, 'index'])->name('admin.2fa');
+    Route::prefix('hr')->name('hr.')->group(function () {
+        Route::get('/', [HrController::class, 'index'])->name('index');
+        Route::resource('departments', HrDepartmentsController::class); // dashboard.hr.departments.index
+        Route::resource('employees', HrEmployeesController::class);
+    });
 });
